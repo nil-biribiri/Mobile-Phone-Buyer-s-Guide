@@ -46,6 +46,7 @@ class ImageCaching: UIImageView {
                       contentMode mode: UIView.ContentMode = .scaleAspectFit,
                       withDownloadIndicator indicator: Bool,
                       completion: SetImageCompletion = nil) {
+        clipsToBounds = true
         contentMode = mode
         self.image = UIImage(imageColor: .clear, imageSize: self.bounds.size)
         self.isShowIndicator = indicator
@@ -66,7 +67,7 @@ class ImageCaching: UIImageView {
                       withDownloadIndicator indicator: Bool = true,
                       completion: SetImageCompletion = nil) {
         guard let url = URL(string: link) else { return }
-        imageCaching(url: url, contentMode: contentMode, withDownloadIndicator: indicator, completion: completion)
+        imageCaching(url: url, contentMode: mode, withDownloadIndicator: indicator, completion: completion)
     }
 
 

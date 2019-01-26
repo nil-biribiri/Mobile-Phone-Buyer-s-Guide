@@ -32,8 +32,6 @@ final class Network {
                         let errorType: ServiceError
 
                         switch statusCode {
-                        case -1009:
-                            errorType = .noConnectionError
                         case .some(let code):
                             // Get error message from payload here
                             errorType = .receiveErrorFromService(statusCode: code, message: "")

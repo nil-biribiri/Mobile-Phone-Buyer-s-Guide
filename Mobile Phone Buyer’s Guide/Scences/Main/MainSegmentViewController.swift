@@ -62,8 +62,7 @@ class MainSegmentViewController: UIViewController {
         }
     }()
     private lazy var listVC: UIViewController = {
-        let listVC = UIViewController()
-        listVC.view.backgroundColor = .gray
+        let listVC = ListViewController()
         listVC.view.translatesAutoresizingMaskIntoConstraints = false
         return listVC
     }()
