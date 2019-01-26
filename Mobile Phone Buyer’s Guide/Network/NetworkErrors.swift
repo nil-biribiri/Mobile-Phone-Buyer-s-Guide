@@ -13,6 +13,7 @@ enum ServiceError: Error, LocalizedError {
     case parseJSONError(resultType: String, message: String, responseData: String)
     case unknownError
     case noConnectionError
+    case urlNotCorrect(url: String)
 
     var errorDescription: String? {
         switch self {
@@ -24,6 +25,8 @@ enum ServiceError: Error, LocalizedError {
             return "Unknown error."
         case .noConnectionError:
             return "No internet connection."
+        case .urlNotCorrect(let url):
+            return "URL \(url) not correct."
         }
     }
 }
