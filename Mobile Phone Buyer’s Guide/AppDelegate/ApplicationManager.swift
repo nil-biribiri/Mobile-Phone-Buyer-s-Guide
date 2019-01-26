@@ -11,7 +11,7 @@ import UIKit
 protocol ApplicationManagerProtocol: class {
     func initAllSDKs()
     func initGlobalAppearance()
-    func setRootVC(_ rootVC: UIViewController, inWindow window: UIWindow?)
+    func setRootVC(_ rootVC: UIViewController, inWindow window: inout UIWindow?)
 }
 
 class ApplicationManager: ApplicationManagerProtocol {
@@ -19,7 +19,7 @@ class ApplicationManager: ApplicationManagerProtocol {
 
     private init() {
         initAllSDKs()
-        initGlobalAppearance()
+//        initGlobalAppearance()
     }
 
     func initAllSDKs() {
@@ -27,15 +27,15 @@ class ApplicationManager: ApplicationManagerProtocol {
     }
 
     func initGlobalAppearance() {
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().backgroundColor = .clear
-        UINavigationBar.appearance().isTranslucent = true
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().isTranslucent = false
     }
 
-    func setRootVC(_ rootVC: UIViewController, inWindow window: UIWindow?) {
+    func setRootVC(_ rootVC: UIViewController, inWindow window: inout UIWindow?) {
+        window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController.init(rootViewController: rootVC)
+//        window?.rootViewController = rootVC
+
+        window?.makeKeyAndVisible()
     }
 
 }
