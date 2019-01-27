@@ -51,7 +51,7 @@ class ListViewController: BaseViewController, ListDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        doSomething()
+        loadPhoneList()
     }
 
     // MARK: - View elements
@@ -77,8 +77,8 @@ class ListViewController: BaseViewController, ListDisplayLogic {
         view.addSubview(listTableView, attachedTo: view)
     }
 
-    func doSomething() {
-        let request = List.DeviceList.Request()
+    func loadPhoneList() {
+        let request = List.DeviceList.Request(fetchPridicate: .priceAscending)
         interactor?.fetchPhoneList(request: request)
     }
 
@@ -88,7 +88,7 @@ class ListViewController: BaseViewController, ListDisplayLogic {
     }
 
     func displayError(error: List.DeviceList.Error) {
-//        print(viewModel.errorMessage)
+        showInfoAlert(title: "Error", message: error.errorMessage)
     }
     
 }
@@ -102,12 +102,19 @@ extension ListViewController: UITableViewDataSource {
         guard let cell = dequeueReuseableListTableViewCell(for: indexPath),
             let phoneData = phoneList[safe: indexPath.row] else { return UITableViewCell() }
         cell.configure(with: phoneData)
+        cell.delegate = self
         return cell
     }
 }
 
 extension ListViewController: UITableViewDelegate {
 
+}
+
+extension ListViewController: ListTableViewCellProtocol {
+    func favoriteButtonDidSelected(id: Int) {
+        interactor?.setFavoritePhone(withId: id)
+    }
 }
 
 // MARK: - ListTableViewCell Factory Method

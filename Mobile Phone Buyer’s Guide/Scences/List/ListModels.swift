@@ -16,7 +16,9 @@ enum List {
   // MARK: Use cases
   
   enum DeviceList {
-    struct Request {}
+    struct Request {
+        let fetchPridicate: PhoneStore.Predicate
+    }
 
     struct Response {
         var phoneList: [Phone]?
@@ -29,11 +31,13 @@ enum List {
 
     struct ViewModel {
         struct DisplayPhone {
+            let id: Int
             let name: String
             let description: String
             let price: String
             let rating: String
             let thumbnailPath: String
+            let isFavorite: Bool
         }
         var displayPhone: [DisplayPhone]
     }

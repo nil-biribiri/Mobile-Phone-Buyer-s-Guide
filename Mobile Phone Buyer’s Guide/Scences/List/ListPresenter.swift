@@ -29,11 +29,13 @@ class ListPresenter: BasePresenter, ListPresentationLogic {
         var viewModel = List.DeviceList.ViewModel(displayPhone: [])
         if let phoneList = response.phoneList {
             phoneList.forEach {
-                let phoneModel = List.DeviceList.ViewModel.DisplayPhone(name: $0.name,
-                                                                        description: $0.description,
-                                                                        price: "Price: $\($0.price)",
+                let phoneModel = List.DeviceList.ViewModel.DisplayPhone(id: $0.id,
+                                                                        name: $0.name,
+                                                                        description: $0._description,
+                    price: "Price: $\(String(format: "%.2f", $0.price))",
                     rating: "Rating: \($0.rating)",
-                    thumbnailPath: $0.thumbImageURL)
+                    thumbnailPath: $0.thumbImageURL,
+                    isFavorite: $0.isFavorite)
                 viewModel.displayPhone.append(phoneModel)
             }
             viewController?.displayDeviceList(viewModel: viewModel)
@@ -41,6 +43,5 @@ class ListPresenter: BasePresenter, ListPresentationLogic {
             let error = List.DeviceList.Error(errorMessage: errorMessage)
             viewController?.displayError(error: error)
         }
-
     }
 }

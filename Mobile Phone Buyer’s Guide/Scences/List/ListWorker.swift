@@ -11,11 +11,35 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class ListWorker {
-  func fetchPhoneList(completion: @escaping (Result<[Phone]>) -> Void) {
-    Network.shared.request(router: Router.getMobilesList) { (result: Result<[Phone]>) in
-        completion(result)
+    let phoneStore = PhoneStore()
+    var notificationToken: NotificationToken? = nil
+
+    func fetchPhoneList(withPredicate predicate: PhoneStore.Predicate = .priceAscending,
+                        completion: @escaping (Result<[Phone]>) -> Void) {
+        Network.shared.request(router: Router.getMobilesList) { [weak self] (result: Result<[Phone]>) in
+            switch result {
+            case .success(let value):
+                self?.phoneStore.savePhoneList(value)
+                if let storedData = self?.phoneStore.getPhoneList(predicate) {
+                    return completion(Result.success(storedData))
+                } else {
+                    return completion(Result.success(value))
+                }
+            case .failure(let error):
+                if let phoneData = self?.phoneStore.getPhoneList(predicate) {
+                    return completion(Result.success(phoneData))
+                }
+                return completion(Result.failure(error))
+            }
+        }
     }
-  }
+
+    func setFavorite(withId id: Int) -> [Phone]? {
+        phoneStore.setFavorite(withId: id)
+        return phoneStore.getPhoneList()
+    }
 }

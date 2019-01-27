@@ -14,6 +14,7 @@ import UIKit
 
 protocol ListBusinessLogic {
     func fetchPhoneList(request: List.DeviceList.Request)
+    func setFavoritePhone(withId id: Int)
 }
 
 protocol ListDataStore {
@@ -29,15 +30,21 @@ class ListInteractor: ListBusinessLogic, ListDataStore {
     func fetchPhoneList(request: List.DeviceList.Request) {
         presenter?.showLoading()
         var response = List.DeviceList.Response()
-        worker.fetchPhoneList { [weak self] (result) in
+        worker.fetchPhoneList(withPredicate: request.fetchPridicate) { [weak self] (result) in
             switch result {
             case .success(let value):
                 response.phoneList = value
+                self?.phoneList = value
             case .failure(let error):
                 response.errorMessage = error.localizedDescription
             }
             self?.presenter?.presentPhoneList(response: response)
         }
+    }
+
+    func setFavoritePhone(withId id: Int) {
+        let response = List.DeviceList.Response.init(phoneList: worker.setFavorite(withId: id), errorMessage: nil)
+        self.presenter?.presentPhoneList(response: response)
     }
 
 }

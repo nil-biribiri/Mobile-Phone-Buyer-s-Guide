@@ -8,11 +8,17 @@
 
 import UIKit
 
-protocol ListTableViewCellProtocol {
+protocol ListTableViewCellConfigureProtocol {
     func configure(with viewModel: List.DeviceList.ViewModel.DisplayPhone)
 }
 
+protocol ListTableViewCellProtocol: class {
+    func favoriteButtonDidSelected(id: Int)
+}
+
 class ListTableViewCell: UITableViewCell {
+    private var id: Int = 0
+    weak var delegate: ListTableViewCellProtocol?
 
     @IBOutlet private weak var thumbnailImage: ImageCaching!
     @IBOutlet private weak var titleLabel: TitleLabel!
@@ -28,11 +34,11 @@ class ListTableViewCell: UITableViewCell {
     @IBOutlet private weak var ratingLabel: UILabel!
     @IBOutlet private weak var favoriteButton: UIButton! {
         didSet {
-            favoriteButton.setImage(#imageLiteral(resourceName: "favoriteUnactive"), for: .normal)
-            favoriteButton.imageView?.tintColor = .blue
+            favoriteButton <-< {
+                $0.addTarget(self, action: #selector(favoriteButtonAction(_:)), for: .touchUpInside)
+            }
         }
     }
-
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,11 +51,23 @@ class ListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
         selectionStyle = .none
     }
-    
+
+    @objc func favoriteButtonAction(_ sender: UIButton) {
+        delegate?.favoriteButtonDidSelected(id: id)
+    }
+
+    func configureFavoriteButtonImage(isFavorite: Bool) {
+        if isFavorite {
+            favoriteButton.setImage(UIImage(named: "favoriteActive")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        } else {
+            favoriteButton.setImage(UIImage(named: "favoriteInactive")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+    }
 }
 
-extension ListTableViewCell: ListTableViewCellProtocol {
+extension ListTableViewCell: ListTableViewCellConfigureProtocol {
     func configure(with viewModel: List.DeviceList.ViewModel.DisplayPhone) {
+        id = viewModel.id
         titleLabel.text = viewModel.name
         descriptionLabel.text = viewModel.description
         priceLabel.text = viewModel.price
@@ -57,7 +75,6 @@ extension ListTableViewCell: ListTableViewCellProtocol {
         thumbnailImage.imageCaching(link: viewModel.thumbnailPath,
                                     contentMode: .scaleAspectFill,
                                     withDownloadIndicator: true)
+        configureFavoriteButtonImage(isFavorite: viewModel.isFavorite)
     }
-
-
 }

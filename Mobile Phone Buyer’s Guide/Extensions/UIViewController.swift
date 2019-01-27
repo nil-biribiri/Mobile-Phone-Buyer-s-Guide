@@ -37,4 +37,14 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
+
+    func showInfoAlert(title: String? = "", message: String? = "", buttonTitle: String? = "OK", handler: ((UIAlertAction) -> Void)? = nil){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        if (buttonTitle != nil) {alert.addAction(UIAlertAction(title: buttonTitle, style: UIAlertAction.Style.default, handler: {
+            handler
+        }()))
+        }
+        present(alert, animated: true, completion: nil)
+    }
+
 }
