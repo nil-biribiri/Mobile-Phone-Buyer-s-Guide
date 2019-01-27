@@ -11,8 +11,27 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 class FavoriteWorker {
-  func doSomeWork() {
-  }
+    let phoneStore = PhoneStore.shared
+
+    func loadFavoritePhoneList(withPredicate predicate: PhoneStore.Predicate = .priceAscending) -> [Phone]? {
+        return phoneStore.getFavoritePhoneList(predicate)
+    }
+
+    func getObervePhoneList() -> Results<Phone>? {
+        return DataManager.shared.objects(Phone.self)
+    }
+
+    @discardableResult
+    func setFavorite(withId id: Int) -> [Phone]? {
+        phoneStore.setFavorite(withId: id)
+        return phoneStore.getFavoritePhoneList()
+    }
+
+    func getOberveSort() -> Results<SortPredicate>? {
+        return DataManager.shared.objects(SortPredicate.self)
+    }
 }

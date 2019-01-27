@@ -17,6 +17,9 @@ enum List {
   
   enum DeviceList {
     struct Request {
+        init (withPredicate predicate: PhoneStore.Predicate = PhoneStore().getSortPredicate()?.predicate ?? .priceAscending) {
+            self.fetchPridicate = predicate
+        }
         let fetchPridicate: PhoneStore.Predicate
     }
 

@@ -11,27 +11,75 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 protocol FavoriteBusinessLogic {
-  func fetchFavoriteList(request: Favorite.FavoriteList.Request)
+    func fetchFavoriteList(request: Favorite.FavoriteList.Request)
+    func removeFavoritePhone(withId id: Int)
 }
 
 protocol FavoriteDataStore {
-  //var name: String { get set }
+    var favoritePhoneList: [Phone] { get }
 }
 
 class FavoriteInteractor: FavoriteBusinessLogic, FavoriteDataStore {
-  var presenter: FavoritePresentationLogic?
-  var worker: FavoriteWorker?
-  //var name: String = ""
-  
-  // MARK: Do something
-  
-  func fetchFavoriteList(request: Favorite.FavoriteList.Request) {
-    worker = FavoriteWorker()
-    worker?.doSomeWork()
-    
-    let response = Favorite.FavoriteList.Response()
-    presenter?.presentSomething(response: response)
-  }
+    var presenter: FavoritePresentationLogic?
+    var worker = FavoriteWorker()
+    var favoritePhoneList: [Phone] = []
+    var request: Favorite.FavoriteList.Request?
+    var favoritePhoneListToken: NotificationToken? = nil
+    var sortToken: NotificationToken? = nil
+
+    deinit {
+        favoritePhoneListToken?.invalidate()
+        sortToken?.invalidate()
+    }
+
+    // MARK: Do something
+    func fetchFavoriteList(request: Favorite.FavoriteList.Request) {
+        presenter?.showLoading()
+        self.request = request
+        var response = Favorite.FavoriteList.Response()
+        if let favoritePhonelist = worker.loadFavoritePhoneList(withPredicate: request.loadPridicate) {
+            response.favoritePhoneList = favoritePhonelist
+        } else {
+            response.favoritePhoneList = []
+        }
+        presenter?.presentSomething(response: response)
+        setObserver()
+    }
+
+    func removeFavoritePhone(withId id: Int) {
+        worker.setFavorite(withId: id)
+    }
+
+    func setObserver() {
+        favoritePhoneListToken = worker.getObervePhoneList()?.observe({ [weak self] (changes: RealmCollectionChange) in
+            switch changes {
+            case .update(_, _, _, _):
+                if let request = self?.request {
+                    self?.fetchFavoriteList(request: request)
+                }
+            default:
+                break
+            }
+        })
+
+        sortToken = worker.getOberveSort()?.first?.observe({ [weak self] (change) in
+            switch change {
+            case .change(let predicate):
+                if let updatedPredicate = PhoneStore.Predicate.init(rawValue: predicate.first?.newValue as! Int) {
+                    self?.request? = Favorite.FavoriteList.Request.init(withPredicate: updatedPredicate)
+                    let updatedPhoneList = self?.worker.loadFavoritePhoneList(withPredicate: updatedPredicate)
+                    let response = Favorite.FavoriteList.Response.init(favoritePhoneList: updatedPhoneList)
+                    self?.presenter?.presentSomething(response: response)
+                }
+            default:
+                break
+            }
+        })
+
+
+    }
 }

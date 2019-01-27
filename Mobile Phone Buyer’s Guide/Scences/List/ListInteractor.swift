@@ -11,6 +11,8 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 
 protocol ListBusinessLogic {
     func fetchPhoneList(request: List.DeviceList.Request)
@@ -25,10 +27,19 @@ class ListInteractor: ListBusinessLogic, ListDataStore {
     var presenter: ListPresentationLogic?
     var worker = ListWorker()
     var phoneList: [Phone] = []
+    var request: List.DeviceList.Request?
+    var phoneListToken: NotificationToken? = nil
+    var sortToken: NotificationToken? = nil
+
+    deinit {
+        phoneListToken?.invalidate()
+        sortToken?.invalidate()
+    }
 
     // MARK: Do something
     func fetchPhoneList(request: List.DeviceList.Request) {
         presenter?.showLoading()
+        self.request = request
         var response = List.DeviceList.Response()
         worker.fetchPhoneList(withPredicate: request.fetchPridicate) { [weak self] (result) in
             switch result {
@@ -39,12 +50,42 @@ class ListInteractor: ListBusinessLogic, ListDataStore {
                 response.errorMessage = error.localizedDescription
             }
             self?.presenter?.presentPhoneList(response: response)
+            self?.setObserver()
         }
     }
 
     func setFavoritePhone(withId id: Int) {
-        let response = List.DeviceList.Response.init(phoneList: worker.setFavorite(withId: id), errorMessage: nil)
-        self.presenter?.presentPhoneList(response: response)
+        worker.setFavorite(withId: id)
+    }
+
+    func setObserver() {
+        phoneListToken = worker.getObervePhoneList()?.observe({ [weak self] (changes: RealmCollectionChange) in
+            switch changes {
+            case .update(_, _, _, _) :
+                guard let request = self?.request,
+                    let updatedPhoneList = self?.worker.loadPhoneList(withPredicate: request.fetchPridicate) else { return }
+                self?.phoneList = updatedPhoneList
+                let response = List.DeviceList.Response.init(phoneList: updatedPhoneList, errorMessage: nil)
+                self?.presenter?.presentPhoneList(response: response)
+            default:
+                break
+            }
+        })
+
+
+        sortToken = worker.getOberveSort()?.first?.observe({ [weak self] (change) in
+            switch change {
+            case .change(let predicate):
+                if let updatedPredicate = PhoneStore.Predicate.init(rawValue: predicate.first?.newValue as! Int) {
+                    self?.request? = List.DeviceList.Request.init(withPredicate: updatedPredicate)
+                    let updatedPhoneList = self?.worker.loadPhoneList(withPredicate: updatedPredicate)
+                    let response = List.DeviceList.Response.init(phoneList: updatedPhoneList, errorMessage: nil)
+                    self?.presenter?.presentPhoneList(response: response)
+                }
+            default:
+                break
+            }
+        })
     }
 
 }

@@ -10,6 +10,15 @@ import Foundation
 import Realm
 import RealmSwift
 
+class SortPredicate: Object {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var predicate: PhoneStore.Predicate = .priceAscending
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
 class Phone: Object, Decodable {
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
