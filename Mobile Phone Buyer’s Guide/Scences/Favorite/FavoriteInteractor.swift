@@ -28,6 +28,7 @@ class FavoriteInteractor: FavoriteBusinessLogic, FavoriteDataStore {
     var worker = FavoriteWorker()
     var favoritePhoneList: [Phone] = []
     var request: Favorite.FavoriteList.Request?
+
     var favoritePhoneListToken: NotificationToken? = nil
     var sortToken: NotificationToken? = nil
 
@@ -43,8 +44,7 @@ class FavoriteInteractor: FavoriteBusinessLogic, FavoriteDataStore {
         var response = Favorite.FavoriteList.Response()
         if let favoritePhonelist = worker.loadFavoritePhoneList(withPredicate: request.loadPridicate) {
             response.favoritePhoneList = favoritePhonelist
-        } else {
-            response.favoritePhoneList = []
+            self.favoritePhoneList = favoritePhonelist
         }
         presenter?.presentSomething(response: response)
         setObserver()
@@ -69,9 +69,10 @@ class FavoriteInteractor: FavoriteBusinessLogic, FavoriteDataStore {
         sortToken = worker.getOberveSort()?.first?.observe({ [weak self] (change) in
             switch change {
             case .change(let predicate):
-                if let updatedPredicate = PhoneStore.Predicate.init(rawValue: predicate.first?.newValue as! Int) {
+                if let updatedPredicate = PhoneStore.Predicate.init(rawValue: predicate.first?.newValue as! Int),
+                    let updatedPhoneList = self?.worker.loadFavoritePhoneList(withPredicate: updatedPredicate) {
                     self?.request? = Favorite.FavoriteList.Request.init(withPredicate: updatedPredicate)
-                    let updatedPhoneList = self?.worker.loadFavoritePhoneList(withPredicate: updatedPredicate)
+                    self?.favoritePhoneList = updatedPhoneList
                     let response = Favorite.FavoriteList.Response.init(favoritePhoneList: updatedPhoneList)
                     self?.presenter?.presentSomething(response: response)
                 }

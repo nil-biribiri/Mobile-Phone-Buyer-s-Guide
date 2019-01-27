@@ -116,6 +116,9 @@ extension FavoriteViewController: UITableViewDelegate {
             }
         }
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        router?.navigateToDetail()
+    }
 }
 
 // MARK: - ListTableViewCell Factory Method

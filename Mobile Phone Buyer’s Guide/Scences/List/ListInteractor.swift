@@ -28,6 +28,7 @@ class ListInteractor: ListBusinessLogic, ListDataStore {
     var worker = ListWorker()
     var phoneList: [Phone] = []
     var request: List.DeviceList.Request?
+
     var phoneListToken: NotificationToken? = nil
     var sortToken: NotificationToken? = nil
 
@@ -76,9 +77,10 @@ class ListInteractor: ListBusinessLogic, ListDataStore {
         sortToken = worker.getOberveSort()?.first?.observe({ [weak self] (change) in
             switch change {
             case .change(let predicate):
-                if let updatedPredicate = PhoneStore.Predicate.init(rawValue: predicate.first?.newValue as! Int) {
+                if let updatedPredicate = PhoneStore.Predicate.init(rawValue: predicate.first?.newValue as! Int),
+                    let updatedPhoneList = self?.worker.loadPhoneList(withPredicate: updatedPredicate) {
                     self?.request? = List.DeviceList.Request.init(withPredicate: updatedPredicate)
-                    let updatedPhoneList = self?.worker.loadPhoneList(withPredicate: updatedPredicate)
+                    self?.phoneList = updatedPhoneList
                     let response = List.DeviceList.Response.init(phoneList: updatedPhoneList, errorMessage: nil)
                     self?.presenter?.presentPhoneList(response: response)
                 }

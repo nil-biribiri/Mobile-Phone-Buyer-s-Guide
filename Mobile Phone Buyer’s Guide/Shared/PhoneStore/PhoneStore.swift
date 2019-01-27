@@ -69,4 +69,8 @@ class PhoneStore {
     func getSortPredicate() -> SortPredicate? {
         return DataManager.shared.objects(SortPredicate.self)?.first
     }
+
+    func getPhoneDetail(withId id: Int) -> Phone? {
+        return DataManager.shared.object(Phone.self, key: id)
+    }
 }
