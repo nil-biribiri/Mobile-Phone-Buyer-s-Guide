@@ -15,8 +15,7 @@ import Realm
 import RealmSwift
 
 class ListWorker {
-    let phoneStore = PhoneStore()
-    var notificationToken: NotificationToken? = nil
+    let phoneStore = PhoneStore.shared
 
     func fetchPhoneList(withPredicate predicate: PhoneStore.Predicate = .priceAscending,
                         completion: @escaping (Result<[Phone]>) -> Void) {
@@ -38,8 +37,22 @@ class ListWorker {
         }
     }
 
+    @discardableResult
+    func loadPhoneList(withPredicate predicate: PhoneStore.Predicate = .priceAscending) -> [Phone]? {
+        return phoneStore.getPhoneList(predicate)
+    }
+
+    @discardableResult
     func setFavorite(withId id: Int) -> [Phone]? {
         phoneStore.setFavorite(withId: id)
         return phoneStore.getPhoneList()
+    }
+
+    func getObervePhoneList() -> Results<Phone>? {
+        return DataManager.shared.objects(Phone.self)
+    }
+
+    func getOberveSort() -> Results<SortPredicate>? {
+        return DataManager.shared.objects(SortPredicate.self)
     }
 }

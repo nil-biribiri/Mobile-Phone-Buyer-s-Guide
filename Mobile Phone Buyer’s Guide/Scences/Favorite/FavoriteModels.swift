@@ -17,12 +17,26 @@ enum Favorite {
   
   enum FavoriteList {
     struct Request {
+        init (withPredicate predicate: PhoneStore.Predicate = PhoneStore().getSortPredicate()?.predicate ?? .priceAscending) {
+            self.loadPridicate = predicate
+        }
+        let loadPridicate: PhoneStore.Predicate
     }
 
     struct Response {
+        var favoritePhoneList: [Phone]?
     }
 
     struct ViewModel {
+        struct DisplayPhone {
+            let id: Int
+            let name: String
+            let description: String
+            let price: String
+            let rating: String
+            let thumbnailPath: String
+        }
+        var displayPhone: [DisplayPhone]
     }
   }
 }

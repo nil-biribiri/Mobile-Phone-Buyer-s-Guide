@@ -11,8 +11,9 @@ import Realm
 import RealmSwift
 
 class PhoneStore {
+    static let shared = PhoneStore()
 
-    enum Predicate {
+    @objc enum Predicate: Int {
         case priceAscending
         case priceDescending
         case ratingDescending
@@ -42,11 +43,30 @@ class PhoneStore {
         }
     }
 
+    func getFavoritePhoneList(_ predicate: Predicate = .priceAscending) -> [Phone]? {
+        if let phoneData = getPhoneList(predicate) {
+            return phoneData.filter{ $0.isFavorite == true }
+        } else {
+            return nil
+        }
+    }
+
     func setFavorite(withId id: Int) {
         DataManager.shared.runTransaction {
             if let updateObject = DataManager.shared.object(Phone.self, key: id) {
                 updateObject.isFavorite.toggle()
             }
         }
+    }
+
+    func setSortPredicate(_ predicate: PhoneStore.Predicate) {
+        let sortData = SortPredicate()
+        sortData.predicate = predicate
+        DataManager.shared.configureRealm()
+        DataManager.shared.add(sortData)
+    }
+
+    func getSortPredicate() -> SortPredicate? {
+        return DataManager.shared.objects(SortPredicate.self)?.first
     }
 }

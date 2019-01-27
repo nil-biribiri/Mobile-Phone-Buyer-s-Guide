@@ -19,18 +19,7 @@ protocol FavoriteDisplayLogic: BaseDisplayLogic {
 class FavoriteViewController: BaseViewController, FavoriteDisplayLogic {
     var interactor: FavoriteBusinessLogic?
     var router: (NSObjectProtocol & FavoriteRoutingLogic & FavoriteDataPassing)?
-
-    // MARK: Object lifecycle
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
+    var favoritePhoneList: [Favorite.FavoriteList.ViewModel.DisplayPhone] = []
 
     // MARK: - View elements
     lazy var favoriteTableView: UITableView = {
@@ -50,8 +39,18 @@ class FavoriteViewController: BaseViewController, FavoriteDisplayLogic {
         return favoriteTableView
     }()
 
-    // MARK: Setup
+    // MARK: Object lifecycle
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
 
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    // MARK: Setup
     private func setup() {
         let viewController = self
         let interactor = FavoriteInteractor()
@@ -70,7 +69,13 @@ class FavoriteViewController: BaseViewController, FavoriteDisplayLogic {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUI()
         loadFavoriteList()
+    }
+
+    // MARK: - View Setup
+    func setUI() {
+        view.addSubview(favoriteTableView, attachedTo: view)
     }
 
     // MARK: Do something
@@ -80,25 +85,37 @@ class FavoriteViewController: BaseViewController, FavoriteDisplayLogic {
     }
 
     func displayFavoriteList(viewModel: Favorite.FavoriteList.ViewModel) {
-        
+        favoritePhoneList = viewModel.displayPhone
+        favoriteTableView.reloadData()
     }
 }
 
 extension FavoriteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return favoritePhoneList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = dequeueReuseableListTableViewCell(for: indexPath) else { return UITableViewCell() }
-//        cell.configure(with: phoneData)
+        guard let cell = dequeueReuseableListTableViewCell(for: indexPath),
+        let favoritePhoneData = favoritePhoneList[safe: indexPath.row] else { return UITableViewCell() }
+        cell.configure(with: favoritePhoneData)
 //        cell.delegate = self
         return cell
     }
 }
 
 extension FavoriteViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            if let id = favoritePhoneList[safe: indexPath.row]?.id {
+                interactor?.removeFavoritePhone(withId: id)
+            }
+        }
+    }
 }
 
 // MARK: - ListTableViewCell Factory Method

@@ -10,6 +10,7 @@ import UIKit
 
 protocol ListTableViewCellConfigureProtocol {
     func configure(with viewModel: List.DeviceList.ViewModel.DisplayPhone)
+    func configure(with viewModel: Favorite.FavoriteList.ViewModel.DisplayPhone)
 }
 
 protocol ListTableViewCellProtocol: class {
@@ -76,5 +77,15 @@ extension ListTableViewCell: ListTableViewCellConfigureProtocol {
                                     contentMode: .scaleAspectFill,
                                     withDownloadIndicator: true)
         configureFavoriteButtonImage(isFavorite: viewModel.isFavorite)
+    }
+    func configure(with viewModel: Favorite.FavoriteList.ViewModel.DisplayPhone) {
+        titleLabel.text = viewModel.name
+        descriptionLabel.text = viewModel.description
+        priceLabel.text = viewModel.price
+        ratingLabel.text = viewModel.rating
+        thumbnailImage.imageCaching(link: viewModel.thumbnailPath,
+                                    contentMode: .scaleAspectFill,
+                                    withDownloadIndicator: true)
+        favoriteButton.isHidden = true
     }
 }

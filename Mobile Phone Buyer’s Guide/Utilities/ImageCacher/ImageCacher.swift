@@ -10,7 +10,7 @@ import UIKit
 
 private let imageCache:NSCache<NSString, UIImage> = {
     let imageCache = NSCache<NSString, UIImage>()
-    //  imageCache.totalCostLimit = 10*1024*1024 // Max 10MB used.
+      imageCache.totalCostLimit = 10*1024*1024 // Max 10MB used.
     return imageCache
 }()
 
@@ -36,7 +36,6 @@ class ImageCaching: UIImageView {
             let configuration                           = URLSessionConfiguration.default
             configuration.requestCachePolicy            = .reloadIgnoringLocalAndRemoteCacheData
             configuration.urlCache                      = nil
-
             return URLSession(configuration: configuration)
         }()
     }

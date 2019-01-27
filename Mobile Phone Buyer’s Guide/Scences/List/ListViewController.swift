@@ -22,6 +22,24 @@ class ListViewController: BaseViewController, ListDisplayLogic {
     var router: (NSObjectProtocol & ListRoutingLogic & ListDataPassing)?
     var phoneList: [List.DeviceList.ViewModel.DisplayPhone] = []
 
+    // MARK: - View elements
+    lazy var listTableView: UITableView = {
+        let listTableView = UITableView() <-< {
+            $0.register(ListTableViewCell.self)
+            $0.tableHeaderView = UIView(frame: .zero)
+            $0.tableFooterView = UIView(frame: .zero)
+            $0.backgroundColor = .clear
+            $0.alwaysBounceVertical = true
+            $0.estimatedRowHeight = 120.0
+            $0.rowHeight = UITableView.automaticDimension
+            $0.separatorStyle = .singleLine
+            $0.separatorInset = .zero
+            $0.delegate = self
+            $0.dataSource = self
+        }
+        return listTableView
+    }()
+    
     // MARK: Object lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -54,31 +72,13 @@ class ListViewController: BaseViewController, ListDisplayLogic {
         loadPhoneList()
     }
 
-    // MARK: - View elements
-    lazy var listTableView: UITableView = {
-        let listTableView = UITableView() <-< {
-            $0.register(ListTableViewCell.self)
-            $0.tableHeaderView = UIView(frame: .zero)
-            $0.tableFooterView = UIView(frame: .zero)
-            $0.backgroundColor = .clear
-            $0.alwaysBounceVertical = true
-            $0.estimatedRowHeight = 120.0
-            $0.rowHeight = UITableView.automaticDimension
-            $0.separatorStyle = .singleLine
-            $0.separatorInset = .zero
-            $0.delegate = self
-            $0.dataSource = self
-        }
-        return listTableView
-    }()
-
     // MARK: - View Setup
     func setUI() {
         view.addSubview(listTableView, attachedTo: view)
     }
 
     func loadPhoneList() {
-        let request = List.DeviceList.Request(fetchPridicate: .priceAscending)
+        let request = List.DeviceList.Request()
         interactor?.fetchPhoneList(request: request)
     }
 

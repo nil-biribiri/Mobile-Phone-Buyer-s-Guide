@@ -71,6 +71,20 @@ class MainSegmentViewController: UIViewController {
         favVC.view.translatesAutoresizingMaskIntoConstraints = false
         return favVC
     }()
+    private lazy var alertController: UIAlertController = {
+        let alertController = UIAlertController(title: "Sort", message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Price low to high", style: .default, handler: { _ in
+            PhoneStore().setSortPredicate(.priceAscending)
+        }))
+        alertController.addAction(UIAlertAction(title: "Price high to low", style: .default, handler: { _ in
+            PhoneStore().setSortPredicate(.priceDescending)
+        }))
+        alertController.addAction(UIAlertAction(title: "Rating", style: .default, handler: { _ in
+            PhoneStore().setSortPredicate(.ratingDescending)
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        return alertController
+    }()
 
     // MARK: - View Controller Lifecycle
     override func viewDidLoad() {
@@ -78,6 +92,7 @@ class MainSegmentViewController: UIViewController {
         // Do any additional setup after loading the view.
         setChildsVC()
         setUI()
+        setSortButton()
         setNavSegmentControl()
     }
 
@@ -122,6 +137,15 @@ class MainSegmentViewController: UIViewController {
         }
     }
 
+    func setSortButton() {
+        let sortBarButton = UIBarButtonItem(title: "Sort",
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(sortButtonAction(_:)))
+        self.navigationItem.rightBarButtonItem = sortBarButton
+    }
+
+
     private func setNavSegmentControl() {
         // Set initail selected scene state
         currentScene = .list
@@ -136,6 +160,20 @@ class MainSegmentViewController: UIViewController {
             self.selectedSegmentBar.frame.origin.x = (sender.frame.width / CGFloat(sender.numberOfSegments)) * CGFloat(sender.selectedSegmentIndex)
         }
     }
+
+    @objc private func sortButtonAction(_ sender: UIBarButtonItem) {
+        self.present(alertController, animated: true, completion: {
+            self.alertController.view.superview?.subviews.first?.isUserInteractionEnabled = true
+            // Adding Tap Gesture to Overlay
+            self.alertController.view.superview?.subviews.first?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+
+        })
+    }
+
+    @objc private func alertControllerBackgroundTapped() {
+        alertController.dismiss(animated: true, completion: nil)
+    }
+
 
 }
 
