@@ -19,7 +19,7 @@ class ApplicationManager: ApplicationManagerProtocol {
 
     private init() {
         initAllSDKs()
-//        initGlobalAppearance()
+        initGlobalAppearance()
     }
 
     func initAllSDKs() {

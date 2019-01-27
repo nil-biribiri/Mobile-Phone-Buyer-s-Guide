@@ -12,7 +12,7 @@ extension UIViewController {
     var loading: UIViewController {
         let viewController = UIViewController()
 
-        let indicator = UIActivityIndicatorView(style: .white)
+        let indicator = UIActivityIndicatorView(style: .gray)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.startAnimating()
         viewController.view.addSubview(indicator, attachedTo: viewController.view)
@@ -37,4 +37,14 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
+
+    func showInfoAlert(title: String? = "", message: String? = "", buttonTitle: String? = "OK", handler: ((UIAlertAction) -> Void)? = nil){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        if (buttonTitle != nil) {alert.addAction(UIAlertAction(title: buttonTitle, style: UIAlertAction.Style.default, handler: {
+            handler
+        }()))
+        }
+        present(alert, animated: true, completion: nil)
+    }
+
 }

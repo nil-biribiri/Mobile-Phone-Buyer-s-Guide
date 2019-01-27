@@ -62,14 +62,12 @@ class MainSegmentViewController: UIViewController {
         }
     }()
     private lazy var listVC: UIViewController = {
-        let listVC = UIViewController()
-        listVC.view.backgroundColor = .gray
+        let listVC = ListViewController()
         listVC.view.translatesAutoresizingMaskIntoConstraints = false
         return listVC
     }()
     private lazy var favVC: UIViewController = {
-        let favVC = UIViewController()
-        favVC.view.backgroundColor = .blue
+        let favVC = FavoriteViewController()
         favVC.view.translatesAutoresizingMaskIntoConstraints = false
         return favVC
     }()
@@ -83,6 +81,11 @@ class MainSegmentViewController: UIViewController {
         setNavSegmentControl()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.selectedSegmentBar.frame.origin.x = (navSegmentControl.frame.width / CGFloat(navSegmentControl.numberOfSegments)) * CGFloat(navSegmentControl.selectedSegmentIndex)
+
+    }
     // MARK: - View Setup
     private func setChildsVC() {
         add(listVC)
