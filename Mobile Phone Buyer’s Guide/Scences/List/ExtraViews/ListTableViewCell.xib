@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="152" id="KGk-i7-Jjw" customClass="ListTableViewCell" customModule="Mobile_Phone_Buyer_s_Guide" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="344" height="152"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="344" height="151.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cor-AH-ZZs">
+                        <rect key="frame" x="8" y="8" width="328" height="135.5"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D5D-fn-68H" customClass="ImageCaching" customModule="Mobile_Phone_Buyer_s_Guide" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="18" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="100" id="6if-G7-LCQ"/>
+                                    <constraint firstAttribute="width" priority="999" constant="100" id="ehf-PA-i2H"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="l04-4H-XfD">
+                                <rect key="frame" x="108" y="29" width="220" height="77.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XXL-Cr-udE">
+                                        <rect key="frame" x="0.0" y="0.0" width="220" height="49"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tn9-hg-V5X">
+                                                <rect key="frame" x="0.0" y="0.0" width="192" height="49"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Zl-eY-PFX" customClass="TitleLabel" customModule="Mobile_Phone_Buyer_s_Guide" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="192" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Description" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRb-oc-XqK" customClass="DetailLabel" customModule="Mobile_Phone_Buyer_s_Guide" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="28.5" width="192" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtk-uf-y6T">
+                                                <rect key="frame" x="200" y="14.5" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" priority="999" constant="20" id="pj3-Pp-dYs"/>
+                                                    <constraint firstAttribute="height" constant="20" id="vy3-dg-XFa"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Xf-9U-7rP">
+                                        <rect key="frame" x="0.0" y="57" width="220" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrL-Ne-SGy">
+                                                <rect key="frame" x="0.0" y="0.0" width="171" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiP-QE-J23" customClass="DetailLabel" customModule="Mobile_Phone_Buyer_s_Guide" customModuleProvider="target">
+                                                <rect key="frame" x="171" y="0.0" width="49" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="cor-AH-ZZs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="AQb-gO-F9Z"/>
+                    <constraint firstAttribute="trailing" secondItem="cor-AH-ZZs" secondAttribute="trailing" constant="8" id="SUt-sY-O6z"/>
+                    <constraint firstAttribute="bottom" secondItem="cor-AH-ZZs" secondAttribute="bottom" constant="8" id="i4l-QA-7O0"/>
+                    <constraint firstItem="cor-AH-ZZs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="xPX-pv-maP"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="sRb-oc-XqK" id="cyL-Xs-Lun"/>
+                <outlet property="favoriteButton" destination="Vtk-uf-y6T" id="Fnl-Cu-TXb"/>
+                <outlet property="priceLabel" destination="mrL-Ne-SGy" id="Dn2-iK-nIr"/>
+                <outlet property="ratingLabel" destination="yiP-QE-J23" id="HcD-Wl-UXj"/>
+                <outlet property="thumbnailImage" destination="D5D-fn-68H" id="fh2-B1-y2L"/>
+                <outlet property="titleLabel" destination="4Zl-eY-PFX" id="fr4-6G-kz6"/>
+            </connections>
+            <point key="canvasLocation" x="148.80000000000001" y="138.53073463268368"/>
+        </tableViewCell>
+    </objects>
+</document>
