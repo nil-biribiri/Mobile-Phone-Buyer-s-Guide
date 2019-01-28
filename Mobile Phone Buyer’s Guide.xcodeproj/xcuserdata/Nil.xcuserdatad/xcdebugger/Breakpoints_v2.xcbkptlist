@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mobile Phone Buyer&#x2019;s Guide/Scences/Detail/DetailViewController.swift"
-            timestampString = "570314652.540419"
+            filePath = "Mobile Phone Buyer&#x2019;s Guide/Scences/Favorite/FavoriteViewController.swift"
+            timestampString = "570361485.346908"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "displaySomething(viewModel:)"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "tableView(_:commit:forRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

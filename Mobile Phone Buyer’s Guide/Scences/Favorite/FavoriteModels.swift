@@ -28,7 +28,7 @@ enum Favorite {
     }
 
     struct ViewModel {
-        struct DisplayPhone {
+        struct DisplayPhone: Equatable {
             let id: Int
             let name: String
             let description: String

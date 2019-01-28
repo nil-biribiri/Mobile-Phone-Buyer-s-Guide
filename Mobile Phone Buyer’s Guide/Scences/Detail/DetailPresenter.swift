@@ -13,7 +13,7 @@
 import UIKit
 
 protocol DetailPresentationLogic {
-    func presentSomething(response: Detail.Something.Response)
+    func presentPhoneDetail(response: Detail.PhoneDetail.Response)
     
 }
 
@@ -21,10 +21,9 @@ class DetailPresenter: DetailPresentationLogic {
     weak var viewController: DetailDisplayLogic?
 
     // MARK: Do something
-
-    func presentSomething(response: Detail.Something.Response) {
+    func presentPhoneDetail(response: Detail.PhoneDetail.Response) {
         if let phoneDetail = response.phoneDetail {
-            let viewModel = Detail.Something.ViewModel.init(id: phoneDetail.id,
+            let viewModel = Detail.PhoneDetail.ViewModel.init(id: phoneDetail.id,
                                                             name: phoneDetail.name,
                                                             description: phoneDetail._description,
                                                             price: "Price: $\(String(format: "%.2f", phoneDetail.price))",
@@ -35,7 +34,9 @@ class DetailPresenter: DetailPresentationLogic {
                     }
                     return $0.url
             })
-            viewController?.displaySomething(viewModel: viewModel)
+            viewController?.displayPhoneDetail(viewModel: viewModel)
+        } else if let errorMessage = response.errorMessage {
+            viewController?.displayError(error: Detail.PhoneDetail.Error(errorMessage: errorMessage))
         }
     }
 }

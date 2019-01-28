@@ -13,7 +13,7 @@
 import UIKit
 
 protocol DetailBusinessLogic {
-    func doSomething(request: Detail.Something.Request)
+    func loadPhoneDetail(request: Detail.PhoneDetail.Request)
 }
 
 protocol DetailDataStore {
@@ -29,24 +29,26 @@ class DetailInteractor: DetailBusinessLogic, DetailDataStore {
 
 
     // MARK: Do something
-    func doSomething(request: Detail.Something.Request) {
+    func loadPhoneDetail(request: Detail.PhoneDetail.Request) {
         if let phoneData = worker.getPhoneDetail(withId: phoneId) {
-            let response = Detail.Something.Response(phoneDetail: phoneData, phoneImages: [])
+            let response = Detail.PhoneDetail.Response(phoneDetail: phoneData, phoneImages: [], errorMessage: nil)
             phoneDetail = phoneData
-            presenter?.presentSomething(response: response)
+            presenter?.presentPhoneDetail(response: response)
             fetchPhoneImages()
         }
     }
 
     func fetchPhoneImages() {
         worker.fetchPhoneImages(withId: phoneId) { [weak self] (result) in
+            var response = Detail.PhoneDetail.Response()
             switch result {
             case .success(let value):
-                let response = Detail.Something.Response.init(phoneDetail: self?.phoneDetail, phoneImages: value)
-                self?.presenter?.presentSomething(response: response)
+                response.phoneDetail = self?.phoneDetail
+                response.phoneImages = value
             case .failure(let error):
-                break
+                response.errorMessage = error.localizedDescription
             }
+            self?.presenter?.presentPhoneDetail(response: response)
         }
     }
 }

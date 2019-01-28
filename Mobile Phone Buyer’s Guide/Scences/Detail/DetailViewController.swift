@@ -13,7 +13,8 @@
 import UIKit
 
 protocol DetailDisplayLogic: class {
-    func displaySomething(viewModel: Detail.Something.ViewModel)
+    func displayPhoneDetail(viewModel: Detail.PhoneDetail.ViewModel)
+    func displayError(error: Detail.PhoneDetail.Error)
 }
 
 class DetailViewController: UIViewController, DetailDisplayLogic {
@@ -38,7 +39,6 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var descriptionLabel: DetailLabel!
-
 
     // MARK: Object lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -71,22 +71,26 @@ class DetailViewController: UIViewController, DetailDisplayLogic {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        showPhoneDetail()
     }
 
     // MARK: Do something
-    func doSomething() {
-        let request = Detail.Something.Request()
-        interactor?.doSomething(request: request)
+    func showPhoneDetail() {
+        let request = Detail.PhoneDetail.Request()
+        interactor?.loadPhoneDetail(request: request)
     }
 
-    func displaySomething(viewModel: Detail.Something.ViewModel) {
+    func displayPhoneDetail(viewModel: Detail.PhoneDetail.ViewModel) {
         self.title = viewModel.name
         ratingLabel.text = viewModel.rating
         priceLabel.text = viewModel.price
         descriptionLabel.text = viewModel.description
         phoneImagesPath = viewModel.imagesPath
         imageCollectionView.reloadData()
+    }
+
+    func displayError(error: Detail.PhoneDetail.Error) {
+        self.showInfoAlert(title: "Error", message: error.errorMessage)
     }
 }
 

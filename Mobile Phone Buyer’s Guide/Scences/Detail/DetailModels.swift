@@ -15,15 +15,20 @@ import UIKit
 enum Detail {
     // MARK: Use cases
 
-    enum Something {
+    enum PhoneDetail {
         struct Request {}
 
         struct Response {
-            let phoneDetail: Phone?
+            var phoneDetail: Phone?
             var phoneImages: [PhoneImage] = []
+            var errorMessage: String?
+        }
+
+        struct Error {
+            let errorMessage: String
         }
         
-        struct ViewModel {
+        struct ViewModel: Equatable {
             let id: Int
             let name: String
             let description: String

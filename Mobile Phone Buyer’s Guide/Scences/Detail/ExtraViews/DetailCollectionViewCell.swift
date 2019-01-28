@@ -14,7 +14,7 @@ protocol DetailCollectionViewCellConfigureProtocol {
 
 class DetailCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet private weak var imageView: ImageCaching!
+    @IBOutlet weak var imageView: ImageCaching!
 
     override func awakeFromNib() {
         super.awakeFromNib()

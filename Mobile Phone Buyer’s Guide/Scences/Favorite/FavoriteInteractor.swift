@@ -46,7 +46,7 @@ class FavoriteInteractor: FavoriteBusinessLogic, FavoriteDataStore {
             response.favoritePhoneList = favoritePhonelist
             self.favoritePhoneList = favoritePhonelist
         }
-        presenter?.presentSomething(response: response)
+        presenter?.presentFavorite(response: response)
         setObserver()
     }
 
@@ -74,7 +74,7 @@ class FavoriteInteractor: FavoriteBusinessLogic, FavoriteDataStore {
                     self?.request? = Favorite.FavoriteList.Request.init(withPredicate: updatedPredicate)
                     self?.favoritePhoneList = updatedPhoneList
                     let response = Favorite.FavoriteList.Response.init(favoritePhoneList: updatedPhoneList)
-                    self?.presenter?.presentSomething(response: response)
+                    self?.presenter?.presentFavorite(response: response)
                 }
             default:
                 break

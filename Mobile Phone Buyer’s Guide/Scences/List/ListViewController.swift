@@ -19,7 +19,7 @@ protocol ListDisplayLogic: BaseDisplayLogic {
 
 class ListViewController: BaseViewController, ListDisplayLogic {
     var interactor: ListBusinessLogic?
-    var router: (NSObjectProtocol & ListRoutingLogic & ListDataPassing)?
+    var router: (ListRoutingLogic & ListDataPassing)?
     var phoneList: [List.DeviceList.ViewModel.DisplayPhone] = []
 
     // MARK: - View elements

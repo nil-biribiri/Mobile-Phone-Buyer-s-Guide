@@ -13,7 +13,7 @@
 import UIKit
 
 protocol FavoritePresentationLogic: BasePresenterLogic {
-    func presentSomething(response: Favorite.FavoriteList.Response)
+    func presentFavorite(response: Favorite.FavoriteList.Response)
 }
 
 class FavoritePresenter: BasePresenter, FavoritePresentationLogic {
@@ -23,7 +23,7 @@ class FavoritePresenter: BasePresenter, FavoritePresentationLogic {
         }
     }
     // MARK: Do something
-    func presentSomething(response: Favorite.FavoriteList.Response) {
+    func presentFavorite(response: Favorite.FavoriteList.Response) {
         defer { hideLoading() }
         var viewModel = Favorite.FavoriteList.ViewModel(displayPhone: [])
         if let favoritePhoneList = response.favoritePhoneList {
@@ -38,9 +38,5 @@ class FavoritePresenter: BasePresenter, FavoritePresentationLogic {
             }
             viewController?.displayFavoriteList(viewModel: viewModel)
         }
-//        else if let errorMessage = response.errorMessage {
-//            let error = List.DeviceList.Error(errorMessage: errorMessage)
-//            viewController?.displayError(error: error)
-//        }
     }
 }
