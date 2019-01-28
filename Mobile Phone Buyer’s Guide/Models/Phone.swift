@@ -17,6 +17,11 @@ class SortPredicate: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
+
+    convenience init(predicate: PhoneStore.Predicate) {
+        self.init()
+        self.predicate = predicate
+    }
 }
 
 class Phone: Object, Decodable {
@@ -42,6 +47,18 @@ class Phone: Object, Decodable {
 
     override static func primaryKey() -> String? {
         return "id"
+    }
+
+    convenience init(id: Int, name: String, price: Double, brand: String, desciption: String, rating: Double, thumbImageURL: String, isFavorite: Bool) {
+        self.init()
+        self.id = id
+        self.name = name
+        self.price = price
+        self.brand = brand
+        self._description = desciption
+        self.rating = rating
+        self.thumbImageURL = thumbImageURL
+        self.isFavorite = isFavorite
     }
 
     required init(from decoder: Decoder) throws {

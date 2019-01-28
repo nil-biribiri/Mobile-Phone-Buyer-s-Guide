@@ -12,46 +12,34 @@
 
 import UIKit
 
-@objc protocol FavoriteRoutingLogic {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+protocol FavoriteRoutingLogic {
+    func navigateToDetail()
 }
 
 protocol FavoriteDataPassing {
-  var dataStore: FavoriteDataStore? { get }
+    var dataStore: FavoriteDataStore? { get }
 }
 
 class FavoriteRouter: NSObject, FavoriteRoutingLogic, FavoriteDataPassing {
-  weak var viewController: FavoriteViewController?
-  var dataStore: FavoriteDataStore?
-  
-  // MARK: Routing
-  
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
+    weak var viewController: FavoriteViewController?
+    var dataStore: FavoriteDataStore?
 
-  // MARK: Navigation
-  
-  //func navigateToSomewhere(source: FavoriteViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: FavoriteDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+    // MARK: Routing
+
+
+    // MARK: Navigation
+    func navigateToDetail() {
+        let destinationVC = DetailViewController()
+        var destinationDS = destinationVC.router?.dataStore
+        passDataToDetailVC(source: dataStore!, destination: &destinationDS!)
+        viewController?.show(destinationVC, sender: nil)
+    }
+
+    // MARK: Passing data
+    func passDataToDetailVC(source: FavoriteDataStore, destination: inout DetailDataStore) {
+        if let selectedRow = viewController?.favoriteTableView.indexPathForSelectedRow?.row {
+            destination.phoneId = source.favoritePhoneList[selectedRow].id
+        }
+    }
+
 }

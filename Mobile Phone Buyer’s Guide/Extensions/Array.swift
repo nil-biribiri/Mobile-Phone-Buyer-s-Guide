@@ -15,3 +15,18 @@ extension Array {
         return isValidIndex ? self[index] : nil
     }
 }
+
+extension Array where Element: Equatable {
+    func containSameElements(_ array: [Element]) -> Bool {
+        var selfCopy = self
+        var secondArrayCopy = array
+        while let currentItem = selfCopy.popLast() {
+            if let indexOfCurrentItem = secondArrayCopy.index(of: currentItem) {
+                secondArrayCopy.remove(at: indexOfCurrentItem)
+            } else {
+                return false
+            }
+        }
+        return secondArrayCopy.isEmpty
+    }
+}

@@ -18,7 +18,7 @@ protocol FavoriteDisplayLogic: BaseDisplayLogic {
 
 class FavoriteViewController: BaseViewController, FavoriteDisplayLogic {
     var interactor: FavoriteBusinessLogic?
-    var router: (NSObjectProtocol & FavoriteRoutingLogic & FavoriteDataPassing)?
+    var router: (FavoriteRoutingLogic & FavoriteDataPassing)?
     var favoritePhoneList: [Favorite.FavoriteList.ViewModel.DisplayPhone] = []
 
     // MARK: - View elements
@@ -99,7 +99,6 @@ extension FavoriteViewController: UITableViewDataSource {
         guard let cell = dequeueReuseableListTableViewCell(for: indexPath),
         let favoritePhoneData = favoritePhoneList[safe: indexPath.row] else { return UITableViewCell() }
         cell.configure(with: favoritePhoneData)
-//        cell.delegate = self
         return cell
     }
 }
@@ -115,6 +114,9 @@ extension FavoriteViewController: UITableViewDelegate {
                 interactor?.removeFavoritePhone(withId: id)
             }
         }
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        router?.navigateToDetail()
     }
 }
 

@@ -15,7 +15,7 @@ import Realm
 import RealmSwift
 
 class ListWorker {
-    let phoneStore = PhoneStore.shared
+    let phoneStore = PhoneStore()
 
     func fetchPhoneList(withPredicate predicate: PhoneStore.Predicate = .priceAscending,
                         completion: @escaping (Result<[Phone]>) -> Void) {

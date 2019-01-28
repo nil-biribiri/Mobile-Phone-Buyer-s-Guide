@@ -21,9 +21,9 @@ class ListTableViewCell: UITableViewCell {
     private var id: Int = 0
     weak var delegate: ListTableViewCellProtocol?
 
-    @IBOutlet private weak var thumbnailImage: ImageCaching!
-    @IBOutlet private weak var titleLabel: TitleLabel!
-    @IBOutlet private weak var descriptionLabel: DetailLabel! {
+    @IBOutlet weak var thumbnailImage: ImageCaching!
+    @IBOutlet weak var titleLabel: TitleLabel!
+    @IBOutlet weak var descriptionLabel: DetailLabel! {
         didSet {
             descriptionLabel <-< {
                 $0.numberOfLines = 2
@@ -31,9 +31,9 @@ class ListTableViewCell: UITableViewCell {
             }
         }
     }
-    @IBOutlet private weak var priceLabel: DetailLabel!
-    @IBOutlet private weak var ratingLabel: UILabel!
-    @IBOutlet private weak var favoriteButton: UIButton! {
+    @IBOutlet weak var priceLabel: DetailLabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton! {
         didSet {
             favoriteButton <-< {
                 $0.addTarget(self, action: #selector(favoriteButtonAction(_:)), for: .touchUpInside)

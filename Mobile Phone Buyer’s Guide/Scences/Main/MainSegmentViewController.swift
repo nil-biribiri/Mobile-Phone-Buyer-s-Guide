@@ -96,6 +96,11 @@ class MainSegmentViewController: UIViewController {
         setNavSegmentControl()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.selectedSegmentBar.frame.origin.x = (navSegmentControl.frame.width / CGFloat(navSegmentControl.numberOfSegments)) * CGFloat(navSegmentControl.selectedSegmentIndex)

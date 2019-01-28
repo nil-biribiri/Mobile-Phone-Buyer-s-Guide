@@ -15,7 +15,7 @@ import Realm
 import RealmSwift
 
 class FavoriteWorker {
-    let phoneStore = PhoneStore.shared
+    let phoneStore = PhoneStore()
 
     func loadFavoritePhoneList(withPredicate predicate: PhoneStore.Predicate = .priceAscending) -> [Phone]? {
         return phoneStore.getFavoritePhoneList(predicate)

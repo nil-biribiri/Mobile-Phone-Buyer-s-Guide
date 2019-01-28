@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailViewController" customModule="Mobile_Phone_Buyer_s_Guide" customModuleProvider="target">
+            <connections>
+                <outlet property="descriptionLabel" destination="khd-6Y-YVw" id="cCF-Nk-2Ur"/>
+                <outlet property="imageCollectionView" destination="Byk-3w-yhF" id="njA-EN-ngh"/>
+                <outlet property="priceLabel" destination="ycc-aJ-WhC" id="MPy-2L-EcR"/>
+                <outlet property="ratingLabel" destination="V13-wX-vya" id="2fH-Fq-q7Z"/>
+                <outlet property="view" destination="iN0-l3-epB" id="bPi-jR-Dw1"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Byk-3w-yhF">
+                    <rect key="frame" x="0.0" y="20" width="375" height="233.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aJl-qt-cJB">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Oqq-5s-a0c">
+                    <rect key="frame" x="8" y="28" width="359" height="20.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V13-wX-vya">
+                            <rect key="frame" x="0.0" y="0.0" width="171.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycc-aJ-WhC">
+                            <rect key="frame" x="187.5" y="0.0" width="171.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khd-6Y-YVw" customClass="DetailLabel" customModule="Mobile_Phone_Buyer_s_Guide" customModuleProvider="target">
+                    <rect key="frame" x="16" y="269.5" width="343" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Oqq-5s-a0c" firstAttribute="leading" secondItem="Byk-3w-yhF" secondAttribute="leading" constant="8" id="4kj-IC-m1i"/>
+                <constraint firstItem="Byk-3w-yhF" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="5QQ-l3-2zg"/>
+                <constraint firstItem="Byk-3w-yhF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8gL-D1-Jpi"/>
+                <constraint firstItem="khd-6Y-YVw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="9ZF-It-XFX"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Byk-3w-yhF" secondAttribute="trailing" id="K1m-y3-cR0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="khd-6Y-YVw" secondAttribute="bottom" constant="16" id="Pge-Fb-rjm"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="khd-6Y-YVw" secondAttribute="trailing" constant="16" id="Qxw-Cv-mWV"/>
+                <constraint firstItem="khd-6Y-YVw" firstAttribute="top" secondItem="Byk-3w-yhF" secondAttribute="bottom" constant="16" id="Rui-Kv-Ry6"/>
+                <constraint firstItem="Oqq-5s-a0c" firstAttribute="top" secondItem="Byk-3w-yhF" secondAttribute="top" constant="8" id="XUk-H9-XJO"/>
+                <constraint firstItem="Byk-3w-yhF" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.35" id="l3w-Qr-pot"/>
+                <constraint firstItem="Byk-3w-yhF" firstAttribute="trailing" secondItem="Oqq-5s-a0c" secondAttribute="trailing" constant="8" id="lBC-Zx-Vky"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+</document>

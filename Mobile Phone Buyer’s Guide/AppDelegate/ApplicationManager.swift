@@ -33,8 +33,6 @@ class ApplicationManager: ApplicationManagerProtocol {
     func setRootVC(_ rootVC: UIViewController, inWindow window: inout UIWindow?) {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = UINavigationController.init(rootViewController: rootVC)
-//        window?.rootViewController = rootVC
-
         window?.makeKeyAndVisible()
     }
 
